@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+        <!-- KaTex -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+    integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+  <!-- The loading of KaTeX is deferred to speed up page rendering -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
+    integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous">
+
+    </script>
+  <!-- To automatically render math in text elements, include the auto-render extension: -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+    integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload='renderMathInElement(document.body, options={
+            delimeters: [
+                {left: "$$", right: "$$" , display: true}, 
+                {left: "$" , right: "$" , display: false}, 
+                {left: "\\(" , right: "\\)" , display: false}, 
+                {left: "\\[" , right: "\\]" , display: true} 
+            ]
+        })'>
+
+  </script>
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script src="script.js"></script>
+  </body>
+  <div id="container">
+      <h1 id="title">Special Relativity Simulator</h1> 
+
+      <div class="row">
+        <div class="column-sim">
+          <center> 
+            <div id="simulator-div">
+            </div>
+                        <div id="legend">
+                <b>Legend:</b> Blue - time; Red - space; Green - light cone.
+              </div> 
+                </center> 
+        </div>
+        <div class="column-expl">
+      Slide to a percentage of the speed of light: 
+        </div> 
+        <div class="slidecontainer">
+          <input type="range" min="-99" max="99" value="0", id="speedRange"></p>Selected percentage of the speed of light: <span id="speedValue"></span>
+        </div>
+        <div>
+      </div>
+      <div class="explanation">
+        <b>What this does</b>. This provides the user with a simulation for the theory of special relativity. Prior to Einstein's theory of relativity, physicists used the <b>Principle of Galilean Relativity</b>. Roughly speaking, this principle stated that only relative motion is measurable. This means that one cannot use a physics experiment to differentiate whether one is in a lab at rest or in a lab which is moving with a constant velocity \( v \).
+        <br>
+        <br>
+        Before proceeding, let's define some terms. A <b>reference frame</b> is a collection of space and time coordinates, denoted \( (t, x, y, z) \). We will let \( S \) denote the reference frame which the user sees when the page loads, and we will let \( S' \) be a reference frame which is moving away from \( S \) with a constant velocity \( v \). We will label the points in \( S' \) as \( (t', x', y', z') \). For our purposes, we will only deal with one spatial dimension, which we will label as \( x \). For Newtonian physics, the transformation to go from the \( S' \) reference frame to the \( S \) reference frame would be: 
+        \[
+          x = x' + vt \hspace{1cm} t = t'.
+        \]
+      </div>
+      Differentiating both sides of \( x = x' + vt \) we obtain an expression for the velocity, 
+      \[
+        v_x = v_x' + v. 
+      \]
+      For small velocities, this is fine; at the time, there was no notion of a universal upper bound on permissible speeds. Then came Einstein. 
+      <br>
+      <br> 
+      There are two key guiding principles of special relativity: (1) <b>General principle of relativity</b>: only relative velocities matter, since there is no notion of an ``absolute velocity'' since no reference frame is more correct than another reference frame and (2) <b>Universal speed limit</b>: nothing can travel faster than the speed of light in a vaccum, \( c \). Using these postulates, we can derive the correct, relativistic, way to transform from the \( S' \) reference frame to the \( S \) reference frame.
+      \[ 
+        x = \gamma (x' + vt' ) 
+      \]
+      \[
+        t = \gamma \left( t' + \frac{v}{c^2}x' \right),
+      \]
+    </div> 
+    where \( \gamma \) is the <b>Lorentz Factor</b>, given by: 
+    \[ 
+      \gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}.
+    \]
+    Observe that for velocities much smaller than the speed of light, the above equations reduce to the Newtonian transformations. 
+    <br>
+    <br>
+    Now, we want to discuss the geometry of space-time, and build up to the topic of this simulation: space-time diagrams. One of the most important ideas in physics is the idea of an invariant quantity. An <b>invariant quantity</b> is a quantity which does not depend on the observer. For example, in the Euclidean plane \( \mathbb{R}^2 \). We can apply several transformations to \( \mathbb{R}^2 \), like rotating or dilations. Suppose we are interested in quantities that remain invariant under such rotations. One quantity is the euclidean distance between points; e.g., for \( (x_1, y_1) \) and \( (x_2, y_2 ) \), the following quantity does not depend on the coordinate system: 
+    \[ 
+      d(x,y)^2 = \sqrt{(x_1 - x_2)^2 + (y_1 - y^2)^2}.
+    \]
+  </body>
+  We now ask ourselves the following question: does there exist an analog of \( t \) and \( x \), that, analogous to the above, is invariant under Lorentz transformations? This is where the <b>invariant interval</b> comes in; it is the correct combination of \( t \) and \( x \) that remains invariant under Lorentz transformations: 
+  \[ 
+    ( \Delta s )^2 := ( \Delta x )^2 - c^2 ( \Delta t )^2.
+  \]
+  The invariance of the above was first understood by Minkowski, and it formed the basis of a new geometric view of space-time: <b>Minkowski space</b>. Before further exploring that, we will first provide a meaning to the invariant interval. The sign of \( \Delta s^2 \) can give us a notion of the causal relation between certain events (that is, which events could concievably have influenced each other). In short, if \( \Delta s^2 = 0 \), then \( \Delta x = \pm c \Delta t \), and the two events are connected by a light ray. We say that such events are <b>null-separated</b>. If \( \Delta s^2 < 0 \), then \( \Delta s \) is imaginary and there exists a frame in which the two events occur at the same place \( \Delta x = 0 \) but at different times \( \Delta t \neq 0 \). Finally, if \( \Delta s^2 > 0 \), then there exists a frame in which the events are simultaneous \( \Delta t = 0 \) but are spatially-separated \( \Delta x = 0 \). We call these events <b>space-like separated</b>.
+  <br>
+  <br>
+  A powerful tool to help us think about causality in special relativity are <b>space-time diagrams</b>, which is the topic of this simulation. We choose a coordinate system where \( c = 1 \), and hence light rays will travel on 45 degree lines. The area between green light rays that contain the \( ct \)-axis form what is called the <b>light cone</b>: all permissible velocities.
+</html>
